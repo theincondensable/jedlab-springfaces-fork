@@ -13,7 +13,7 @@ import java.util.Date;
 import java.util.Locale;
 
 /**
- * @author omid pourhadi Email : omidpourhadi AT gmail DOT com
+ * @author abbas
  */
 public class PersianDateConverter implements Converter {
 private static final PersianDateConverter INSTANCE = new PersianDateConverter();
