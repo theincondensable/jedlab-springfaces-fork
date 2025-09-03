@@ -314,6 +314,12 @@
 			<artifactId>icu4j</artifactId>
 			<version>72.1</version>
 		</dependency>
+
+		<dependency>
+			<groupId>com.omidbiz</groupId>
+			<artifactId>pfaces</artifactId>
+			<version>0.0.1</version>
+		</dependency>
 	</dependencies>
 	
 	<build>
