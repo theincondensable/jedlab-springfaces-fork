@@ -34,7 +34,12 @@
 		<springwebflow-version>2.4.4.RELEASE</springwebflow-version>
 	</properties>
 	
-	
+	<repositories>
+		<repository>
+			<id>jaspersoft-third-party</id>
+			<url>https://jaspersoft.jfrog.io/jaspersoft/third-party-ce-artifacts/</url>
+		</repository>
+	</repositories>
 
 	<dependencyManagement>
 		<dependencies>
