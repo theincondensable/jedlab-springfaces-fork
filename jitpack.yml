@@ -1,0 +1,5 @@
+jdk:
+  - openjdk8
+
+install:
+  - mvn -q -DskipTests install

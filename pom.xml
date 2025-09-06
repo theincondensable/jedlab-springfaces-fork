@@ -35,7 +35,6 @@
         <jackson.version>2.10.1</jackson.version>
     </properties>
 
-
     <dependencies>
         <dependency>
             <groupId>commons-configuration</groupId>
@@ -339,24 +338,14 @@
                 </plugin>
 
                 <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>
-                    <version>2.3.2</version>
+                    <version>3.8.1</version>
                     <configuration>
-                        <source>${java.compiler.version}</source>
-                        <target>${java.compiler.version}</target>
-                        <optimize>true</optimize>
-                        <!-- javac doesn't compile all package-info.java, therefore use eclipse
-                            compiler <compilerId>eclipse</compilerId> -->
+                        <source>1.8</source>
+                        <target>1.8</target>
+                        <encoding>UTF-8</encoding>
                     </configuration>
-                    <dependencies>
-                        <dependency>
-                            <groupId>org.codehaus.plexus</groupId>
-                            <artifactId>plexus-compiler-eclipse</artifactId>
-                            <version>1.8.1</version>
-                            <scope>runtime</scope>
-                        </dependency>
-                    </dependencies>
-
                 </plugin>
 
                 <plugin>
