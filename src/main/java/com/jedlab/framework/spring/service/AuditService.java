@@ -1,14 +1,10 @@
 package com.jedlab.framework.spring.service;
 
-import java.lang.reflect.ParameterizedType;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-
+import com.jedlab.framework.audit.Revision;
+import com.jedlab.framework.audit.RevisionPO;
+import com.jedlab.framework.util.CollectionUtil;
+import com.jedlab.framework.util.StringUtil;
+import com.jedlab.framework.web.ExtendedLazyDataModel.SortProperty;
 import org.hibernate.envers.AuditReader;
 import org.hibernate.envers.AuditReaderFactory;
 import org.hibernate.envers.RevisionType;
@@ -17,11 +13,13 @@ import org.hibernate.envers.query.AuditQuery;
 import org.hibernate.envers.query.criteria.AuditCriterion;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.jedlab.framework.audit.Revision;
-import com.jedlab.framework.audit.RevisionPO;
-import com.jedlab.framework.util.CollectionUtil;
-import com.jedlab.framework.util.StringUtil;
-import com.jedlab.framework.web.SortProperty;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import java.lang.reflect.ParameterizedType;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 public abstract class AuditService<T>
 {

@@ -1,11 +1,21 @@
 package com.jedlab.framework.spring.service;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.logging.Logger;
+import com.jedlab.framework.exceptions.ServiceException;
+import com.jedlab.framework.spring.dao.AbstractDAO;
+import com.jedlab.framework.util.CollectionUtil;
+import com.jedlab.framework.util.StringUtil;
+import com.jedlab.framework.web.ExtendedLazyDataModel.SortProperty;
+import org.primefaces.model.SortOrder;
+import org.springframework.dao.DataAccessException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.domain.Sort.Order;
+import org.springframework.data.jpa.domain.Specification;
+import org.springframework.data.repository.support.PageableExecutionUtils;
+import org.springframework.transaction.TransactionException;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -19,25 +29,9 @@ import javax.persistence.metamodel.ManagedType;
 import javax.persistence.metamodel.Metamodel;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.validation.ConstraintViolationException;
-
-import org.primefaces.model.SortOrder;
-import org.springframework.dao.DataAccessException;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.domain.Sort.Direction;
-import org.springframework.data.domain.Sort.Order;
-import org.springframework.data.jpa.domain.Specification;
-import org.springframework.data.repository.support.PageableExecutionUtils;
-import org.springframework.transaction.TransactionException;
-import org.springframework.transaction.annotation.Transactional;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.jedlab.framework.exceptions.ServiceException;
-import com.jedlab.framework.spring.dao.AbstractDAO;
-import com.jedlab.framework.util.CollectionUtil;
-import com.jedlab.framework.util.StringUtil;
-import com.jedlab.framework.web.SortProperty;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author Omid Pourhadi
@@ -48,10 +42,6 @@ public abstract class AbstractService<E>
 
     @PersistenceContext(unitName = "entityManagerFactory")
     protected EntityManager entityManager;
-    
-    public static final ObjectMapper mapper = new ObjectMapper();
-    
-    private static final Logger logger = Logger.getLogger(AbstractService.class.getName());
 
     public abstract AbstractDAO<E> getDao();
 
@@ -296,7 +286,7 @@ public abstract class AbstractService<E>
     }
 
     @Transactional(readOnly = true)
-    public List<E> load(int first, int pageSize, List<SortProperty> sortFields,
+    public List<E> load(int first, int pageSize, List<com.jedlab.framework.web.ExtendedLazyDataModel.SortProperty> sortFields,
             Map<String, Object> filters, Class<E> clz, JPARestriction restriction)
     {
 
@@ -335,23 +325,6 @@ public abstract class AbstractService<E>
 
         result = createQuery.getResultList();
         return result;
-    }
-    
-    public E readForUpdate(Class<E> clz, Long id, String jsonContent)
-    {
-            E entityOp = findById(clz, id);
-            if (entityOp == null)
-                throw new ServiceException("EntityNotFound");
-            E entity = entityOp;
-            try
-            {
-                mapper.readerForUpdating(entity).readValue(jsonContent);
-            }
-            catch (IOException e)
-            {
-                logger.info(e.getMessage());
-            }
-            return entity;
     }
 
 }

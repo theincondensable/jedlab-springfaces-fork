@@ -87,10 +87,6 @@ public class MappingAxon2HttpMessageConverter extends AbstractGenericHttpMessage
     {
         if (mediaType == null || mediaType.isCompatibleWith(MediaType.APPLICATION_JSON))
         {
-        	if(String.class.equals(clazz))
-        	{
-        		return true;
-        	}
             return clazz.isAnnotationPresent(org.omidbiz.core.axon.internal.Axon.class);
         }
 
@@ -141,8 +137,6 @@ public class MappingAxon2HttpMessageConverter extends AbstractGenericHttpMessage
             {
                 rawClass = javaType.getRawClass();
             }
-            if(rawClass.equals(String.class))
-                return jsonContent.replaceAll("\t", "").replaceAll("\n", "");
             Object instance = rawClass.newInstance();
             if (StringUtil.isEmpty(jsonContent))
                 return instance;
@@ -202,15 +196,7 @@ public class MappingAxon2HttpMessageConverter extends AbstractGenericHttpMessage
                 }
             }
         }
-        String json = "";
-        if(String.class.equals(type))
-    	{
-        	json = (String)t;
-    	}
-        else
-        {
-        	json = axonBuilder.serializeNulls("true".equals(serializeNull)).create().toJson(t);
-        }
+        String json = axonBuilder.serializeNulls("true".equals(serializeNull)).create().toJson(t);
         body.write(json.getBytes("UTF-8"));
         body.flush();
         IOUtils.closeQuietly(body);

@@ -1,16 +1,11 @@
 package com.jedlab.framework.web;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-
+import com.jedlab.framework.db.EntityModel;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortMeta;
 import org.primefaces.model.SortOrder;
 
-import com.jedlab.framework.db.EntityModel;
+import java.util.*;
 
 public abstract class ExtendedLazyDataModel<E extends EntityModel> extends LazyDataModel<E>
 {
@@ -41,7 +36,7 @@ public abstract class ExtendedLazyDataModel<E extends EntityModel> extends LazyD
     @Override
     public List<E> load(int first, int pageSize, List<SortMeta> multiSortMeta, Map<String, Object> filters)
     {
-        List<SortProperty> sorts = new ArrayList<SortProperty>();
+        List<SortProperty> sorts = new ArrayList<ExtendedLazyDataModel.SortProperty>();
         if (multiSortMeta != null)
         {
             multiSortMeta.forEach(item -> sorts.add(new SortProperty(item.getSortField(), item.getSortOrder())));
@@ -95,9 +90,30 @@ public abstract class ExtendedLazyDataModel<E extends EntityModel> extends LazyD
         if (instance == null)
             return null;
         return instance.getId();
-    }
+    };
 
-    
+    public static class SortProperty
+    {
+        private final String name;
+        private final SortOrder sortOrder;
+
+        public SortProperty(String name, SortOrder sortOrder)
+        {
+            this.name = name;
+            this.sortOrder = sortOrder;
+        }
+
+        public String getName()
+        {
+            return name;
+        }
+
+        public SortOrder getSortOrder()
+        {
+            return sortOrder;
+        }
+
+    }
 
     protected abstract List<E> lazyLoad(int first, int pageSize, List<SortProperty> sortFields, Map<String, Object> filters);
 
