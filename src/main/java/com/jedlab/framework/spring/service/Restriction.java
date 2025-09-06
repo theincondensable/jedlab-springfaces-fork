@@ -1,18 +1,7 @@
 package com.jedlab.framework.spring.service;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
+import org.hibernate.Criteria;
 
-/**
- * @author Omid Pourhadi
- *
- */
-public interface Restriction
-{
-
-    public void applyFilter(CriteriaBuilder builder, CriteriaQuery criteria, Root root);
-
-    
-    
+public interface Restriction {
+    void applyFilter(Criteria var1);
 }
